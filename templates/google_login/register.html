@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block content %}
+    
+    <style>
+	.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+
+
+<main class="form-signin w-100 m-auto">
+  <form method="post" autocomplete="off">{% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating">
+      <input type="text" name="first_name" class="form-control" id="floatingFirstName">
+      <label for="floatingFirstName">First Name</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="text" name="last_name" class="form-control" id="floatingLastName">
+      <label for="floatingLastName">Last Name</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="text" name="username" class="form-control" id="floatingUserName" autocomplete="off">
+      <label for="floatingUserName">Username</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingEmail">
+      <label for="floatingEmail">Email address</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="password" name="password1" class="form-control" id="floatingPassword" autocomplete="off">
+      <label for="floatingPassword">Password</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="password" name="password2" class="form-control" id="floatingPassword">
+      <label for="floatingPassword">Password Again</label>
+    </div>
+   			 {% for field in registration_form %}
+				<p>
+					{% for error in field.errors %}
+						<p style="color: red;">{{error}}</p>
+					{% endfor %}
+
+				</p>
+			{% endfor %}
+			{% if registration_form.non_field_errors %}
+				<p style="color:red">{{registration_form.non_field_errors}}</p>
+			{% endif %}
+    <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+  </form><br>
+  <p>Have an account? <a href="{% url 'login' %}">Login Here</a></p>
+<p class="text-center">OR</p>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'google' %}">Login with Google</a>
+
+</main>
+{% endblock %}
+

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block content %}
+
+    <style>
+	.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+
+
+<main class="form-signin w-100 m-auto">
+  <form method="post">{% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div><br>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+   			 {% for field in login_form %}
+				<p>
+					{% for error in field.errors %}
+						<p style="color: red;">{{error}}</p>
+					{% endfor %}
+
+				</p>
+			{% endfor %}
+			{% if login_form.non_field_errors %}
+				<p style="color:red">{{login_form.non_field_errors}}</p>
+			{% endif %}
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+  </form><br>
+  <p>Forgot Password? <a href="{% url 'reset_password' %}">Reset</a></p>
+  <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
+<p class="text-center">OR</p>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'google' %}">Login with Google</a><br><br>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'facebook' %}">Login with Facebook</a><br><br>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'github' %}">Login with Github</a>
+
+</main>
+{% endblock %}
+

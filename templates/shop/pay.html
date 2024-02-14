@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="row d-flex col-4 m-auto">
+        <form method="post">
+            {% csrf_token %}
+
+            <fieldset>
+                <legend class="border-bottom mb-4">Paying for {{ product.name }}</legend>
+                <label for="price">Amount</label>
+                <input type="text" class="form-control" value="{{ product.price }}" readonly name="price"><br>
+                <input type="text" placeholder="Enter Phone Number (2547...)" name="phone" class="form-control">
+            </fieldset>
+            <div class="form-group">
+                <input type="submit" value="Pay" class="btn btn-info mt-4">
+            </div>
+
+        </form>
+    {% for message in messages %}
+    	{{ message }}
+    {% endfor %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div>
+        {% if messages %}
+            <ul class="messages list-unstyled ">
+                {% for message in messages %}
+                    <li  style="color: green;font-size: 30px; text-align: center" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-lg-6  col-12 d-flex">
+                <div class="container mb-4">
+                    <p>{{product.name}}</p>
+                    <p>{{product.price}}</p>
+                    <p>{{product.desc}}</p>
+                    <p>{{product.qtty}}</p>
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div>
+                    <p><a class="btn btn-outline-danger" href="shop/delete/{{ product.id }}">Delete</a></p>
+                    <p><a class="btn btn-outline-info" href="#">Update</a></p>
+                    <p><a class="btn btn-outline-success" href="shop/pay/{{ product.id }}">Pay</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
